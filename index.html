@@ -62,13 +62,250 @@
             background: rgba(37, 99, 235, 0.7);
         }
 
-        /* Print Stylesheet for flawless PDF Export */
+        /* Print Stylesheet for clean A4 portrait browser printing */
+        @page {
+            size: A4 portrait;
+            margin: 10mm;
+        }
+
         @media print {
-            body {
+            html, body {
+                width: 210mm !important;
+                min-height: 297mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 background: white !important;
                 color: black !important;
-                font-size: 11pt;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
+
+            body {
+                font-size: 9.5pt !important;
+                line-height: 1.28 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            #resumeContainer,
+            .print-full-width {
+                width: 100% !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* Preserve the desktop two-column resume layout when printing */
+            #resumeContainer > div {
+                display: grid !important;
+                grid-template-columns: 31% 69% !important;
+                gap: 6mm !important;
+                align-items: start !important;
+            }
+
+            #resumeContainer aside {
+                grid-column: 1 !important;
+            }
+
+            #resumeContainer .lg\:col-span-8 {
+                grid-column: 2 !important;
+            }
+
+            /* Keep the balanced lower two-column layout on print */
+            .xl\:grid-cols-2 {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 4mm !important;
+            }
+
+            /* Compact spacing for print without changing content */
+            .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 4mm !important;
+            }
+
+            .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 4.5mm !important;
+            }
+
+            .p-6 {
+                padding: 4mm !important;
+            }
+
+            .p-4 {
+                padding: 3mm !important;
+            }
+
+            .p-3\.5 {
+                padding: 2.5mm !important;
+            }
+
+            .mb-6 {
+                margin-bottom: 3.5mm !important;
+            }
+
+            .mb-4 {
+                margin-bottom: 2.5mm !important;
+            }
+
+            .mb-3 {
+                margin-bottom: 2mm !important;
+            }
+
+            .mt-2 {
+                margin-top: 1.5mm !important;
+            }
+
+            .gap-8 {
+                gap: 5mm !important;
+            }
+
+            .gap-6 {
+                gap: 4mm !important;
+            }
+
+            .gap-4 {
+                gap: 3mm !important;
+            }
+
+            /* Prevent awkward splitting of cards/sections */
+            section,
+            aside > div,
+            .page-break-inside-avoid,
+            .rounded-xl,
+            .rounded-2xl {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+
+            /* Allow the long experience section to break naturally between roles */
+            section:has([data-lucide="briefcase"]) {
+                break-inside: auto !important;
+                page-break-inside: auto !important;
+            }
+
+            section:has([data-lucide="briefcase"]) .page-break-inside-avoid {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+
+            /* Avoid headings becoming orphaned at page bottoms */
+            h1, h2, h3 {
+                break-after: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            /* Remove decorative effects that waste print space */
+            .shadow-lg, .shadow-md, .shadow-sm, .shadow-xl {
+                box-shadow: none !important;
+            }
+
+            .border {
+                border-color: #d1d5db !important;
+            }
+
+            .bg-slate-900,
+            .bg-slate-800,
+            .bg-slate-100,
+            .bg-slate-50,
+            .bg-blue-50,
+            .bg-amber-50 {
+                background-color: transparent !important;
+            }
+
+            .dark {
+                color-scheme: light !important;
+            }
+
+            a {
+                text-decoration: none !important;
+                color: black !important;
+            }
+
+            /* Keep profile image fully contained in its avatar box when printing */
+            .w-32.h-32 {
+                width: 26mm !important;
+                height: 26mm !important;
+                min-width: 26mm !important;
+                min-height: 26mm !important;
+                max-width: 26mm !important;
+                max-height: 26mm !important;
+                margin-bottom: 4mm !important;
+                overflow: hidden !important;
+            }
+
+            .w-32.h-32 > div {
+                width: 26mm !important;
+                height: 26mm !important;
+                min-width: 26mm !important;
+                min-height: 26mm !important;
+                max-width: 26mm !important;
+                max-height: 26mm !important;
+                overflow: hidden !important;
+            }
+
+            #avatarImage {
+                position: absolute !important;
+                inset: 0 !important;
+                width: 26mm !important;
+                height: 26mm !important;
+                max-width: 26mm !important;
+                max-height: 26mm !important;
+                object-fit: cover !important;
+                object-position: center !important;
+                display: block !important;
+            }
+
+            #avatarInitials {
+                max-width: 100% !important;
+                max-height: 100% !important;
+            }
+
+            /* Ensure the title starts below the image rather than underneath it */
+            .w-32.h-32 + h1 {
+                clear: both !important;
+                margin-top: 0 !important;
+                position: relative !important;
+                z-index: 1 !important;
+            }
+
+            /* Smaller type where useful to help the resume fit into 1–2 pages */
+            .text-2xl {
+                font-size: 16pt !important;
+                line-height: 1.15 !important;
+            }
+
+            .text-lg {
+                font-size: 12pt !important;
+            }
+
+            .text-base {
+                font-size: 9.5pt !important;
+            }
+
+            .text-sm {
+                font-size: 8.6pt !important;
+            }
+
+            .text-xs {
+                font-size: 7.6pt !important;
+            }
+
+            .text-\[11px\] {
+                font-size: 7pt !important;
+            }
+
+            /* Improve list compactness for print */
+            ul {
+                margin-top: 1mm !important;
+                margin-bottom: 0 !important;
+            }
+
+            li {
+                margin-bottom: 0.6mm !important;
+            }
+        }
             .no-print {
                 display: none !important;
             }
@@ -285,7 +522,96 @@
 <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 font-medium" contenteditable="false">Urdu</span>
 <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 font-medium" contenteditable="false">Arabic</span>
 </div>
+</div><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+<i class="w-5 h-5 text-primary-600 dark:text-primary-400" data-lucide="folder-git-2"></i>
+<span>Projects</span>
+</h2>
+<div class="space-y-4">
+<!-- Project 1 -->
+<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+<h3 class="font-bold text-slate-900 dark:text-white text-base" contenteditable="false">M.Y Group of Companies Corporate Website</h3>
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300 border border-primary-200 dark:border-primary-800/50 w-fit" contenteditable="false">Early 2026</span>
 </div>
+<p class="text-sm text-slate-600 dark:text-slate-300" contenteditable="false">
+                                Developed, configured, and hosted the official website for M.Y Group of Companies, establishing a modernized web presence and streamlined corporate information architecture.
+                            </p>
+</div>
+<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+<h3 class="font-bold text-slate-900 dark:text-white text-base" contenteditable="false">Digital Skill Assessment System for TFL</h3>
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300 border border-primary-200 dark:border-primary-800/50 w-fit" contenteditable="false">2021</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300" contenteditable="false">
+                            Designed and developed a Digital Skill Assessment System for Telecom Fiji Limited (TFL) as part of the Capstone Course for the Bachelor of Software Engineering Degree at The University of the South Pacific.
+                        </p>
+</div>
+</div></section><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-6">
+<i class="w-5 h-5 text-primary-600 dark:text-primary-400" data-lucide="graduation-cap"></i>
+<span>Education</span>
+</h2>
+<div class="space-y-4">
+<div class="flex flex-col border-b border-slate-100 dark:border-slate-800 pb-3">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">MBA Studies</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400" contenteditable="false">Higher Postgraduate Business Education</p>
+</div>
+<span class="text-xs font-semibold text-primary-600 dark:text-primary-400 mt-1 sm:mt-0" contenteditable="false">Planned Commencement: 2027</span>
+</div>
+<div class="flex flex-col border-b border-slate-100 dark:border-slate-800 pb-3">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Bachelor of Software Engineering</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400" contenteditable="false">The University of the South Pacific (USP)</p>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1 sm:mt-0" contenteditable="false">Graduated 2021</span>
+</div>
+<div class="flex flex-col">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">FY13CE Certificate</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400" contenteditable="false">Nasinu Muslim College</p>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1 sm:mt-0" contenteditable="false">Completed 2016</span>
+</div>
+</div>
+</section><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+<i class="w-5 h-5 text-primary-600 dark:text-primary-400" data-lucide="award"></i>
+<span>Certifications &amp; Recognition</span>
+</h2>
+<div class="grid grid-cols-1 gap-3">
+<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Colgate-Palmolive Chairman's YCMAD Award</div>
+<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">4-Time Winner (1 Gold, 2 Silver, 1 Highly Commendable)</div>
+<div class="text-[11px] text-slate-400 mt-0.5">"You Can Make A Difference" Project Award</div>
+</div>
+<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Best President</div>
+<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim Youth Movement (2024)</div>
+<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim Youth Movement (2025)</div>
+<div class="text-[11px] text-slate-400 mt-0.5">Community &amp; Leadership Excellence</div>
+</div>
+<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Best Youth Member</div>
+<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim Youth Movement (2024)</div>
+<div class="text-[11px] text-slate-400 mt-0.5">Community &amp; Leadership Excellence</div>
+</div>
+<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Service Recognition</div>
+<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim League (2026)</div>
+<div class="text-[11px] text-slate-400 mt-0.5">Community &amp; Leadership Excellence</div>
+</div>
+<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Fundamentals of Digital Marketing</div>
+<div class="text-xs text-slate-500 dark:text-slate-400 mt-1" contenteditable="false">Google's Digital Garage Online (2021)</div>
+</div>
+<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Email Marketing Certificate</div>
+<div class="text-xs text-slate-500 dark:text-slate-400 mt-1" contenteditable="false">HubSpot Academy Online (2021)</div>
+</div>
+</div>
+</section>
 </aside>
 <!-- RIGHT COLUMN: Professional Overview, Experience, Projects & Referees -->
 <div class="lg:col-span-8 space-y-6">
@@ -314,7 +640,7 @@
 <div class="w-2 h-2 rounded-full bg-primary-600"></div>
 </div>
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-<h3 class="font-bold text-slate-900 dark:text-white text-base" contenteditable="false">Business Analyst</h3>
+<h3 class="font-bold text-slate-900 dark:text-white text-base" contenteditable="false">Business Analyst | IT Lead | AI Ambassador</h3>
 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300 border border-primary-200 dark:border-primary-800/50 w-fit" contenteditable="false">Jul 2024 - Present</span>
 </div>
 <div class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
@@ -472,103 +798,10 @@
 </div>
 </section>
 <!-- Key Projects -->
-
 <!-- Certifications & Key Recognition -->
-
 <!-- Education -->
-
 <!-- References / Referees -->
-
-<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start"><div class="space-y-6"><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
-<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
-<i class="w-5 h-5 text-primary-600 dark:text-primary-400" data-lucide="award"></i>
-<span>Certifications &amp; Recognition</span>
-</h2>
-<div class="grid grid-cols-1 gap-4">
-<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
-<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Colgate-Palmolive Chairman's YCMAD Award</div>
-<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">4-Time Winner (1 Gold, 2 Silver, 1 Highly Commendable)</div>
-<div class="text-[11px] text-slate-400 mt-0.5">"You Can Make A Difference" Project Award</div>
-</div>
-<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
-<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Best President</div>
-<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim Youth Movement (2024)</div>
-<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim Youth Movement (2025)</div>
-<div class="text-[11px] text-slate-400 mt-0.5">Community &amp; Leadership Excellence</div>
-</div>
-<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
-<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Best Youth Member</div>
-<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim Youth Movement (2024)</div>
-<div class="text-[11px] text-slate-400 mt-0.5">Community &amp; Leadership Excellence</div>
-</div>
-<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
-<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Service Recognition</div>
-<div class="text-xs text-primary-600 dark:text-primary-400 mt-1" contenteditable="false">Fiji Muslim League (2026)</div>
-<div class="text-[11px] text-slate-400 mt-0.5">Community &amp; Leadership Excellence</div>
-</div>
-<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
-<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Fundamentals of Digital Marketing</div>
-<div class="text-xs text-slate-500 dark:text-slate-400 mt-1" contenteditable="false">Google's Digital Garage Online (2021)</div>
-</div>
-<div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
-<div class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Email Marketing Certificate</div>
-<div class="text-xs text-slate-500 dark:text-slate-400 mt-1" contenteditable="false">HubSpot Academy Online (2021)</div>
-</div>
-</div>
-</section><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
-<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-6">
-<i class="w-5 h-5 text-primary-600 dark:text-primary-400" data-lucide="graduation-cap"></i>
-<span>Education</span>
-</h2>
-<div class="space-y-4">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-<div>
-<h3 class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">MBA Studies</h3>
-<p class="text-xs text-slate-500 dark:text-slate-400" contenteditable="false">Higher Postgraduate Business Education</p>
-</div>
-<span class="text-xs font-semibold text-primary-600 dark:text-primary-400 mt-1 sm:mt-0" contenteditable="false">Planned Commencement: 2027</span>
-</div>
-<div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-<div>
-<h3 class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">Bachelor of Software Engineering</h3>
-<p class="text-xs text-slate-500 dark:text-slate-400" contenteditable="false">The University of the South Pacific (USP)</p>
-</div>
-<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1 sm:mt-0" contenteditable="false">Graduated 2021</span>
-</div>
-<div class="flex flex-col sm:flex-row sm:items-center justify-between">
-<div>
-<h3 class="font-bold text-slate-900 dark:text-white text-sm" contenteditable="false">FY13CE Certificate</h3>
-<p class="text-xs text-slate-500 dark:text-slate-400" contenteditable="false">Nasinu Muslim College</p>
-</div>
-<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1 sm:mt-0" contenteditable="false">Completed 2016</span>
-</div>
-</div>
-</section></div><div class="space-y-6"><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
-<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
-<i class="w-5 h-5 text-primary-600 dark:text-primary-400" data-lucide="folder-git-2"></i>
-<span>Projects</span>
-</h2>
-<div class="space-y-4">
-<!-- Project 1 -->
-<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-<h3 class="font-bold text-slate-900 dark:text-white text-base" contenteditable="false">M.Y Group of Companies Corporate Website</h3>
-<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300 border border-primary-200 dark:border-primary-800/50 w-fit" contenteditable="false">Early 2026</span>
-</div>
-<p class="text-sm text-slate-600 dark:text-slate-300" contenteditable="false">
-                                Developed, configured, and hosted the official website for M.Y Group of Companies, establishing a modernized web presence and streamlined corporate information architecture.
-                            </p>
-</div>
-<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-<h3 class="font-bold text-slate-900 dark:text-white text-base" contenteditable="false">Digital Skill Assessment System for TFL</h3>
-<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300 border border-primary-200 dark:border-primary-800/50 w-fit" contenteditable="false">2021</span>
-</div>
-<p class="text-sm text-slate-600 dark:text-slate-300" contenteditable="false">
-                            Designed and developed a Digital Skill Assessment System for Telecom Fiji Limited (TFL) as part of the Capstone Course for the Bachelor of Software Engineering Degree at The University of the South Pacific.
-                        </p>
-</div>
-</div></section><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
+<div class="space-y-6"><section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 page-break-inside-avoid">
 <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-6">
 <i class="w-5 h-5 text-primary-600 dark:text-primary-400" data-lucide="users"></i>
 <span>References</span>
@@ -615,7 +848,7 @@
 </div>
 </div>
 </div>
-</section></div></div></div>
+</section></div></div>
 </div>
 </main>
 <!-- Footer -->
